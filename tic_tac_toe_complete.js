@@ -1,5 +1,15 @@
 // PSEUDO CODE
 
+/* Check first row.  
+  1st position: if a 1, look for another one next to it. if another 1, look right again. if found x wins.
+    if no, look below, if yes, look below again, if yes, x wins.
+    if no, look down plus one, if yes, look down plus one again, if yes, x wins.
+    
+  
+ .  Find a 1, look to 
+
+*/
+
 // CODE
 function isSolved(board) {
   // TODO: Check if the board is solved!
