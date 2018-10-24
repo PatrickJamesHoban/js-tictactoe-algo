@@ -2,6 +2,8 @@
 
 // https://www.codewars.com/kata/525caa5c1bf619d28c000335/train/javascript
 
+// https://repl.it/@PatrickHoban/JSTicTacToe
+
 /* 
   1st row:  
     1st position: horizontal, vertical, diagonal
@@ -22,9 +24,21 @@
     3rd position: NA
 
   
- .  Find a 1, look to 
+ Check horizontals, board[i][0] board[i+1][0] board[i+2][0]
+  sum of 0, 1, 2, means there are open positions.
+  sum of 3 means X won.
+    sum of 4 could be open positions or full.
+  sum of 5 means row is full.
+  sum of 6 means O won.
 
- Is there a flatten array?
+ Check verticals, board[i=0][j], board[=0][j+1], board[i=0][j+2]
+
+ Check diagonals, board[i=2][j=2]
+
+
+ Flatten array?
+
+ Check diagonal from middle out?
 
 
 
@@ -38,7 +52,28 @@
 
 // CODE
 function isSolved(board) {
-  // TODO: Check if the board is solved!
+  // Horizontals
+  for (i = 0; i < board.length; i++) {
+    var catGame = 0;
+    var horizontal = board[i].reduce((a, b) => a + b);
+    // console.log(horizontal)
+    if (horizontal == 3) {
+      console.log('X wins!');
+      return 1;
+    }
+    if (horizontal == 6) {
+      console.log('O wins!');
+      return 2;
+    }
+    for (j = 0; j < board[i].length; j++) {
+      // console.log(board[i][j])
+      if (board[i][j] > 0) {
+        var checkH = board[i][j];
+        // console.log(checkH);
+      }
+    }
+    // console.log(board[i])
+  }
 }
 
 // DRIVER CODE / TESTS
@@ -66,5 +101,28 @@ a7 = [[1, 1, 2], [2, 2, 1], [2, 0, 1]];
 
 // Game is finished and is a draw.  No zeros remaining.
 a5 = [[1, 1, 2], [2, 2, 1], [1, 2, 1]];
+
+// Start with horizontal solves
+// X win horizontal 1
+a9 = [[2, 0, 2], [1, 1, 1], [0, 0, 0]];
+// X win horizontal 2
+a10 = [[2, 0, 2], [0, 0, 0], [1, 1, 1]];
+// X win horizontal 3
+a11 = [[1, 1, 1], [2, 0, 2], [0, 0, 0]];
+
+isSolved(a9);
+isSolved(a10);
+console.log(isSolved(a11));
+
+// O win horizontal 1
+a12 = [[2, 2, 2], [1, 0, 1], [0, 1, 0]];
+// O win horizontal 2
+a13 = [[1, 0, 1], [2, 2, 2], [1, 0, 1]];
+// O win horizontal 3
+a14 = [[1, 0, 1], [1, 2, 1], [2, 2, 2]];
+
+isSolved(a12);
+console.log(isSolved(a13));
+isSolved(a14);
 
 // Bonus, zeros remaining cannot create a win for either X or O.
