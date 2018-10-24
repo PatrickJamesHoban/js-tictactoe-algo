@@ -31,7 +31,8 @@
   sum of 5 means row is full.
   sum of 6 means O won.
 
- Check verticals, board[i=0][j], board[=0][j+1], board[i=0][j+2]
+ Check verticals, board[i=0][j], board[i=0][j+1], board[i=0][j+2]
+
 
  Check diagonals, board[i=2][j=2]
 
@@ -65,10 +66,18 @@ function isSolved(board) {
       console.log('O wins!');
       return 2;
     }
-    for (j = 0; j < board[i].length; j++) {
+    for (j = 0; j < board.length; j++) {
       // console.log(board[i][j])
       if (board[i][j] > 0) {
-        var checkH = board[i][j];
+        var vertical = board[i][j] + board[i + 1][j] + board[i + 2][j];
+        if (vertical == 3) {
+          console.log('X wins!');
+          return 1;
+        }
+        if (vertical == 6) {
+          console.log('O wins!');
+          return 2;
+        }
         // console.log(checkH);
       }
     }
@@ -103,6 +112,7 @@ a7 = [[1, 1, 2], [2, 2, 1], [2, 0, 1]];
 a5 = [[1, 1, 2], [2, 2, 1], [1, 2, 1]];
 
 // Start with horizontal solves
+
 // X win horizontal 1
 a9 = [[2, 0, 2], [1, 1, 1], [0, 0, 0]];
 // X win horizontal 2
@@ -124,5 +134,29 @@ a14 = [[1, 0, 1], [1, 2, 1], [2, 2, 2]];
 isSolved(a12);
 console.log(isSolved(a13));
 isSolved(a14);
+
+// Vertical solutions
+
+// X win vertical
+a15 = [[1, 1, 2], [2, 1, 2], [0, 1, 0]];
+// X win vertical
+a16 = [[1, 1, 2], [2, 1, 2], [0, 1, 0]];
+// X win vertical
+a17 = [[1, 1, 2], [2, 1, 2], [0, 1, 0]];
+
+// console.log(isSolved(a15));
+// console.log(isSolved(a16));
+// console.log(isSolved(a17));
+
+// O win vertical
+a18 = [[1, 1, 2], [0, 2, 2], [1, 1, 2]];
+// O win vertical
+a19 = [[1, 2, 1], [0, 2, 2], [1, 2, 1]];
+// O win vertical
+a20 = [[2, 1, 1], [2, 2, 0], [2, 1, 1]];
+
+console.log(isSolved(a18));
+console.log(isSolved(a19));
+console.log(isSolved(a20));
 
 // Bonus, zeros remaining cannot create a win for either X or O.
