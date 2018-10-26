@@ -63,153 +63,199 @@
 */
 
 // CODE
+
+// FIRST REFACTOR
 function isSolved(board) {
   // Diagonals
   var diagOne = board[0][0] * board[1][1] * board[2][2];
-  // console.log('diag one is ' + diagOne);
   var diagTwo = board[0][2] * board[1][1] * board[2][0];
-  // console.log('diag two is ' + diagTwo);
   if (diagOne === 1 || diagTwo === 1) {
-    console.log('X wins on diagonal!');
     return 1;
   }
   if (diagOne === 8 || diagTwo === 8) {
-    console.log('O wins on diagonal!');
     return 2;
   }
+
+  // Set variable for game still being played, open moves still on the board.
+  var openSpace = false;
+
   // Horizontals
   for (i = 0; i < board.length; i++) {
-    var openSpace = false;
     var horizontal = board[i].reduce((a, b) => a * b);
-    // console.log(horizontal)
     if (horizontal == 1) {
-      console.log('X wins!');
       return 1;
     }
     if (horizontal == 8) {
-      console.log('O wins!');
       return 2;
     }
-    // wrap so it only executes vertically the first time through.
+
+    // Wrap for statement with if, so it only executes vertically the first time through.
     if (i == 0) {
       for (j = 0; j < board.length; j++) {
-        // console.log(board[i][j])
         if (board[i][j] > 0) {
           var vertical = board[i][j] * board[i + 1][j] * board[i + 2][j];
-
           if (vertical == 1) {
-            console.log('X wins!');
             return 1;
           }
           if (vertical == 8) {
-            console.log('O wins!');
             return 2;
           }
           if (vertical == 0) {
             openSpace = true;
-            console.log(openSpace + ' Not a cats game yet.');
           }
-          // console.log(checkH);
         }
       }
     }
-
-    // console.log(board[i])
   }
+  // Game not over or cats game
   if (openSpace == false) {
-    console.log('Its a draw');
     return 0;
+  } else {
+    return -1;
   }
 }
 
+// FIRST FUNCTIONAL PASS!
+// function isSolved(board) {
+//   // Diagonals
+//   var diagOne = board[0][0] * board[1][1] * board[2][2];
+//   // console.log('diag one is ' + diagOne);
+//   var diagTwo = board[0][2] * board[1][1] * board[2][0];
+//   // console.log('diag two is ' + diagTwo);
+//   if (diagOne === 1 || diagTwo === 1){
+//     console.log('X wins on diagonal!')
+//     return 1
+//   }
+//   if (diagOne === 8 || diagTwo === 8){
+//     console.log('O wins on diagonal!')
+//     return 2
+//   }
+
+//   // Set variable for game still being played, open moves still on the board.
+//   var openSpace = false;
+
+//   // Horizontals
+//   for (i=0; i<board.length; i++) {
+//     var horizontal = board[i].reduce((a, b) => a * b)
+//     // console.log(horizontal)
+//     if (horizontal == 1) {
+//       console.log('X wins!')
+//       return 1
+//     }
+//     if (horizontal == 8) {
+//       console.log('O wins!')
+//       return 2
+//     }
+//     // wrap so it only executes vertically the first time through.
+//     if (i == 0) {
+//       for (j=0; j<board.length; j++){
+//         // console.log(board[i][j])
+//         if(board[i][j]>0){
+//           var vertical = board[i][j] * board[i+1][j] * board[i+2][j];
+
+//           if (vertical == 1) {
+//             console.log('X wins!')
+//             return 1
+//           }
+//           if (vertical == 8) {
+//             console.log('O wins!')
+//             return 2
+//           }
+//           if (vertical == 0) {
+//             openSpace = true;
+//             console.log(openSpace + ' Not a cats game yet.');
+//           }
+//           // console.log(checkH);
+//         }
+//       }
+//     }
+//     // console.log(board[i])
+//   }
+//   console.log(openSpace)
+//   if (openSpace == false) {
+//     console.log('Its a draw')
+//     return 0;
+//   } else {
+//     console.log('Keep playing, not over yet!')
+//     return -1;
+//   }
+// }
+
 // DRIVER CODE / TESTS
 
-// Unsolved and unfinished.
-a1 = [[0, 0, 1], [0, 1, 2], [2, 1, 0]]; // expect -1 = unsolved and unfinished return
-
-// X win horizontal
-a2 = [[1, 1, 1], [2, 0, 2], [0, 0, 0]];
-
-// X win vertical
-a3 = [[1, 1, 2], [2, 1, 2], [0, 1, 0]];
-
-// X win diagonal
-a4 = [[1, 1, 2], [2, 1, 2], [0, 2, 1]];
-
-// O win horizontal
-a5 = [[1, 1, 2], [2, 2, 2], [1, 0, 1]];
-
-// O win vertical
-a6 = [[1, 1, 2], [0, 2, 2], [1, 1, 2]];
-
-// O win diagonal
-a7 = [[1, 1, 2], [2, 2, 1], [2, 0, 1]];
-
-// Game is finished and is a draw.  No zeros remaining.
-a5 = [[1, 1, 2], [2, 2, 1], [1, 2, 1]];
-
-// Start with horizontal solves
+// Horizontal Solutions
 
 // X win horizontal 1
-a9 = [[2, 0, 2], [1, 1, 1], [0, 0, 0]];
+a1 = [[2, 0, 2], [1, 1, 1], [0, 0, 0]];
 // X win horizontal 2
-a10 = [[2, 0, 2], [0, 0, 0], [1, 1, 1]];
+a2 = [[2, 0, 2], [0, 0, 0], [1, 1, 1]];
 // X win horizontal 3
-a11 = [[1, 1, 1], [2, 0, 2], [0, 0, 0]];
+a3 = [[1, 1, 1], [2, 0, 2], [0, 0, 0]];
 
-console.log(isSolved(a9));
-console.log(isSolved(a10));
-console.log(isSolved(a11));
+console.log(isSolved(a1) + ' a1');
+console.log(isSolved(a2) + ' a2');
+console.log(isSolved(a3) + ' a3');
 
 // O win horizontal 1
-a12 = [[2, 2, 2], [1, 0, 1], [0, 1, 0]];
+a4 = [[2, 2, 2], [1, 0, 1], [0, 1, 0]];
 // O win horizontal 2
-a13 = [[1, 0, 1], [2, 2, 2], [1, 0, 1]];
+a5 = [[1, 0, 1], [2, 2, 2], [1, 0, 1]];
 // O win horizontal 3
-a14 = [[1, 0, 1], [1, 2, 1], [2, 2, 2]];
+a6 = [[1, 0, 1], [1, 2, 1], [2, 2, 2]];
 
-console.log(isSolved(a12));
-console.log(isSolved(a13));
-console.log(isSolved(a14));
+console.log(isSolved(a4) + ' a4');
+console.log(isSolved(a5) + ' a5');
+console.log(isSolved(a6) + ' a6');
 
 // Vertical solutions
 
 // X win vertical
-a15 = [[1, 1, 2], [2, 1, 2], [0, 1, 0]];
+a7 = [[1, 1, 2], [2, 1, 2], [0, 1, 0]];
 // X win vertical
-a16 = [[1, 1, 0], [2, 1, 2], [0, 1, 2]];
+a8 = [[1, 1, 0], [2, 1, 2], [0, 1, 2]];
 // X win vertical
-a17 = [[1, 1, 2], [2, 1, 2], [0, 1, 0]];
+a9 = [[1, 1, 2], [2, 1, 2], [0, 1, 0]];
 
-console.log(isSolved(a15));
-console.log(isSolved(a16));
-console.log(isSolved(a17));
+console.log(isSolved(a7) + ' a7');
+console.log(isSolved(a8) + ' a8');
+console.log(isSolved(a9) + ' a9');
 
 // O win vertical
-a18 = [[0, 1, 2], [1, 2, 2], [1, 1, 2]];
+a10 = [[0, 1, 2], [1, 2, 2], [1, 1, 2]];
 // O win vertical
-a19 = [[1, 2, 1], [0, 2, 2], [1, 2, 1]];
+a11 = [[1, 2, 1], [0, 2, 2], [1, 2, 1]];
 // O win vertical
-a20 = [[2, 1, 1], [2, 2, 0], [2, 1, 1]];
+a12 = [[2, 1, 1], [2, 2, 0], [2, 1, 1]];
 
-console.log(isSolved(a18));
-console.log(isSolved(a19));
-console.log(isSolved(a20));
+console.log(isSolved(a10) + ' a10');
+console.log(isSolved(a11) + ' a11');
+console.log(isSolved(a12) + ' a12');
 
 // DIAGONALS
 
 // X win diagonal 1
-a21 = [[1, 1, 2], [2, 1, 2], [0, 2, 1]];
+a13 = [[1, 1, 2], [2, 1, 2], [0, 2, 1]];
 // X win diagonal 2
-a22 = [[2, 1, 1], [2, 1, 2], [1, 2, 0]];
+a14 = [[2, 1, 1], [2, 1, 2], [1, 2, 0]];
 // O win diagonal 1
-a23 = [[2, 1, 0], [1, 2, 1], [0, 1, 2]];
+a15 = [[2, 1, 0], [1, 2, 1], [0, 1, 2]];
 // O win diagonal 2
-a24 = [[1, 1, 2], [2, 2, 1], [2, 0, 1]];
+a16 = [[1, 1, 2], [2, 2, 1], [2, 0, 1]];
 
-console.log(isSolved(a21) + ' a21');
-console.log(isSolved(a22) + ' a22');
-console.log(isSolved(a23) + ' a23');
-console.log(isSolved(a24) + ' a24');
+console.log(isSolved(a13) + ' a13');
+console.log(isSolved(a14) + ' a14');
+console.log(isSolved(a15) + ' a15');
+console.log(isSolved(a16) + ' a16');
+
+// UNFINISHED GAME
+
+// Unsolved and unfinished.  Still has open spaces.  Expect -1 return.
+a17 = [[0, 0, 1], [0, 1, 2], [2, 1, 0]];
+console.log(isSolved(a17) + ' a17 keep playing');
+
+// TIE GAME / DRAW / CATS GAME
+// Game is finished and is a draw.  No zeros remaining.
+a18 = [[1, 1, 2], [2, 2, 1], [1, 2, 1]];
+console.log(isSolved(a18) + ' a18 game over tie game');
 
 // Bonus, zeros remaining cannot create a win for either X or O.
