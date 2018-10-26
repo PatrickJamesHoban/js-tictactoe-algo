@@ -64,6 +64,19 @@
 
 // CODE
 function isSolved(board) {
+  // Diagonals
+  var diagOne = board[0][0] * board[1][1] * board[2][2];
+  // console.log('diag one is ' + diagOne);
+  var diagTwo = board[0][2] * board[1][1] * board[2][0];
+  // console.log('diag two is ' + diagTwo);
+  if (diagOne === 1 || diagTwo === 1) {
+    console.log('X wins on diagonal!');
+    return 1;
+  }
+  if (diagOne === 8 || diagTwo === 8) {
+    console.log('O wins on diagonal!');
+    return 2;
+  }
   // Horizontals
   for (i = 0; i < board.length; i++) {
     var openSpace = false;
@@ -182,5 +195,21 @@ a20 = [[2, 1, 1], [2, 2, 0], [2, 1, 1]];
 console.log(isSolved(a18));
 console.log(isSolved(a19));
 console.log(isSolved(a20));
+
+// DIAGONALS
+
+// X win diagonal 1
+a21 = [[1, 1, 2], [2, 1, 2], [0, 2, 1]];
+// X win diagonal 2
+a22 = [[2, 1, 1], [2, 1, 2], [1, 2, 0]];
+// O win diagonal 1
+a23 = [[2, 1, 0], [1, 2, 1], [0, 1, 2]];
+// O win diagonal 2
+a24 = [[1, 1, 2], [2, 2, 1], [2, 0, 1]];
+
+console.log(isSolved(a21) + ' a21');
+console.log(isSolved(a22) + ' a22');
+console.log(isSolved(a23) + ' a23');
+console.log(isSolved(a24) + ' a24');
 
 // Bonus, zeros remaining cannot create a win for either X or O.
