@@ -92,17 +92,15 @@ function isSolved(board) {
     // Wrap for statement with if, so it only executes vertically the first time through.
     if (i == 0) {
       for (j = 0; j < board.length; j++) {
-        if (board[i][j] > 0) {
-          var vertical = board[i][j] * board[i + 1][j] * board[i + 2][j];
-          if (vertical == 1) {
-            return 1;
-          }
-          if (vertical == 8) {
-            return 2;
-          }
-          if (vertical == 0) {
-            openSpace = true;
-          }
+        var vertical = board[i][j] * board[i + 1][j] * board[i + 2][j];
+        if (vertical == 1) {
+          return 1;
+        }
+        if (vertical == 8) {
+          return 2;
+        }
+        if (vertical == 0) {
+          openSpace = true;
         }
       }
     }
@@ -252,6 +250,9 @@ console.log(isSolved(a16) + ' a16');
 // Unsolved and unfinished.  Still has open spaces.  Expect -1 return.
 a17 = [[0, 0, 1], [0, 1, 2], [2, 1, 0]];
 console.log(isSolved(a17) + ' a17 keep playing');
+
+a19 = [[2, 0, 2], [2, 1, 1], [1, 2, 1]]; // Expected: -1, instead got: 0
+console.log(isSolved(a19) + ' a19 keep playing, expect -1');
 
 // TIE GAME / DRAW / CATS GAME
 // Game is finished and is a draw.  No zeros remaining.
