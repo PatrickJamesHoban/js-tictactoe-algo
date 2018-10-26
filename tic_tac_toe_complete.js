@@ -26,7 +26,7 @@
   
  Check horizontals, board[i][0] board[i+1][0] board[i+2][0]
   sum of 0, 1, 2, means there are open positions.
-  sum of 3 means X won.
+  sum of 3 means X won. or empty, x and o.
     sum of 4 could be open positions or full.
   sum of 5 means row is full.
   sum of 6 means O won.
@@ -42,6 +42,17 @@
  Check diagonal from middle out?
 
 
+ NEW IDEA... WHAT IF I MULTIPLY?
+ 1*1*1 = 1
+ 2*2*2 = 8
+ 1*0*2 = 0, STILL OPEN SPACES
+ 1*2*2 = ...  ANY OTHER NUMBER IS A CATS GAME
+
+ Looks at horizontal row 1. Declares a winner if there is one.
+ Looks at vertical row 1, 2, and 3.  Declares a winner if there is one.
+
+
+
 
   RETURN: 
   return empty spots = -1
@@ -55,33 +66,46 @@
 function isSolved(board) {
   // Horizontals
   for (i = 0; i < board.length; i++) {
-    var catGame = 0;
-    var horizontal = board[i].reduce((a, b) => a + b);
+    var openSpace = false;
+    var horizontal = board[i].reduce((a, b) => a * b);
     // console.log(horizontal)
-    if (horizontal == 3) {
+    if (horizontal == 1) {
       console.log('X wins!');
       return 1;
     }
-    if (horizontal == 6) {
+    if (horizontal == 8) {
       console.log('O wins!');
       return 2;
     }
-    for (j = 0; j < board.length; j++) {
-      // console.log(board[i][j])
-      if (board[i][j] > 0) {
-        var vertical = board[i][j] + board[i + 1][j] + board[i + 2][j];
-        if (vertical == 3) {
-          console.log('X wins!');
-          return 1;
+    // wrap so it only executes vertically the first time through.
+    if (i == 0) {
+      for (j = 0; j < board.length; j++) {
+        // console.log(board[i][j])
+        if (board[i][j] > 0) {
+          var vertical = board[i][j] * board[i + 1][j] * board[i + 2][j];
+
+          if (vertical == 1) {
+            console.log('X wins!');
+            return 1;
+          }
+          if (vertical == 8) {
+            console.log('O wins!');
+            return 2;
+          }
+          if (vertical == 0) {
+            openSpace = true;
+            console.log(openSpace + ' Not a cats game yet.');
+          }
+          // console.log(checkH);
         }
-        if (vertical == 6) {
-          console.log('O wins!');
-          return 2;
-        }
-        // console.log(checkH);
       }
     }
+
     // console.log(board[i])
+  }
+  if (openSpace == false) {
+    console.log('Its a draw');
+    return 0;
   }
 }
 
@@ -120,8 +144,8 @@ a10 = [[2, 0, 2], [0, 0, 0], [1, 1, 1]];
 // X win horizontal 3
 a11 = [[1, 1, 1], [2, 0, 2], [0, 0, 0]];
 
-isSolved(a9);
-isSolved(a10);
+console.log(isSolved(a9));
+console.log(isSolved(a10));
 console.log(isSolved(a11));
 
 // O win horizontal 1
@@ -131,25 +155,25 @@ a13 = [[1, 0, 1], [2, 2, 2], [1, 0, 1]];
 // O win horizontal 3
 a14 = [[1, 0, 1], [1, 2, 1], [2, 2, 2]];
 
-isSolved(a12);
+console.log(isSolved(a12));
 console.log(isSolved(a13));
-isSolved(a14);
+console.log(isSolved(a14));
 
 // Vertical solutions
 
 // X win vertical
 a15 = [[1, 1, 2], [2, 1, 2], [0, 1, 0]];
 // X win vertical
-a16 = [[1, 1, 2], [2, 1, 2], [0, 1, 0]];
+a16 = [[1, 1, 0], [2, 1, 2], [0, 1, 2]];
 // X win vertical
 a17 = [[1, 1, 2], [2, 1, 2], [0, 1, 0]];
 
-// console.log(isSolved(a15));
-// console.log(isSolved(a16));
-// console.log(isSolved(a17));
+console.log(isSolved(a15));
+console.log(isSolved(a16));
+console.log(isSolved(a17));
 
 // O win vertical
-a18 = [[1, 1, 2], [0, 2, 2], [1, 1, 2]];
+a18 = [[0, 1, 2], [1, 2, 2], [1, 1, 2]];
 // O win vertical
 a19 = [[1, 2, 1], [0, 2, 2], [1, 2, 1]];
 // O win vertical
